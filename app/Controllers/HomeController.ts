@@ -7,12 +7,14 @@ export class HomeController {
 
   /** The Dply Local marketing page. */
   index(c: Ctx) {
+    const repo = config("app.repo", "https://github.com/shaferllc/dply-local");
     return this.app.make(View).render(
       Landing({
         shot: "/shots/dashboard.png",
-        dmg: "/DplyLocal.dmg",
-        version: config("app.version", "v0.2.0"),
-        repo: config("app.repo", "https://github.com/shaferllc/dply-local"),
+        // Always the newest CI-built DMG (published on every version tag).
+        dmg: `${repo}/releases/latest/download/DplyLocal.dmg`,
+        version: config("app.version", "v0.2.1"),
+        repo,
       }),
     );
   }
