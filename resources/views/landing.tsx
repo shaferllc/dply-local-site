@@ -44,10 +44,13 @@ const styles = `
     background-clip:text; color:transparent; }
   .lede { font-size:clamp(17px,2.2vw,20px); color:var(--dim); max-width:620px; margin:0 auto 30px; }
   .cta { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:14px; }
-  .install { margin-top:26px; display:inline-flex; align-items:center; gap:10px;
-    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:11px 16px;
-    font-size:14px; color:var(--ink); }
-  .install .p { color:var(--coral); }
+  .ver { margin-top:16px; font-size:13px; color:var(--faint); }
+  .stats { display:flex; gap:44px; justify-content:center; margin-top:36px; flex-wrap:wrap; }
+  .stats div { display:flex; flex-direction:column; align-items:center; }
+  .stats b { font-size:30px; font-weight:800; letter-spacing:-.02em;
+    background:linear-gradient(120deg,var(--coral),var(--coral2)); -webkit-background-clip:text;
+    background-clip:text; color:transparent; }
+  .stats span { font-size:13px; color:var(--dim); margin-top:2px; }
 
   .shot { margin:52px auto 0; max-width:1000px; border-radius:14px; overflow:hidden;
     border:1px solid var(--line); box-shadow:0 40px 120px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.03);
@@ -94,7 +97,7 @@ const F: FC<{ ic: string; title: string; children: string }> = ({ ic, title, chi
   </div>
 );
 
-export const Landing: FC<{ shot: string; repo: string }> = ({ shot, repo }) => (
+export const Landing: FC<{ shot: string; repo: string; dmg: string; version: string }> = ({ shot, repo, dmg, version }) => (
   <html lang="en">
     <head>
       <meta charset="utf-8" />
@@ -114,7 +117,8 @@ export const Landing: FC<{ shot: string; repo: string }> = ({ shot, repo }) => (
           <a class="ghost" href="#features">Features</a>
           <a class="ghost" href="#profiler">Profiler</a>
           <a class="ghost" href="#system">System</a>
-          <a class="btn sec" href={repo}>GitHub</a>
+          <a class="ghost" href={repo}>GitHub</a>
+          <a class="btn" href={dmg}>Download</a>
         </div>
       </nav>
 
@@ -128,10 +132,16 @@ export const Landing: FC<{ shot: string; repo: string }> = ({ shot, repo }) => (
             from a native macOS app.
           </p>
           <div class="cta">
-            <a class="btn" href={repo}>Get it on GitHub</a>
-            <a class="btn sec" href="#features">See what's inside</a>
+            <a class="btn" href={dmg}>↓&nbsp; Download for macOS</a>
+            <a class="btn sec" href={repo}>View on GitHub</a>
           </div>
-          <div class="install mono"><span class="p">$</span> dpl link . &nbsp;·&nbsp; <span style="color:var(--dim)">your project is now</span> myapp.test</div>
+          <div class="ver mono">{version} · 3.4 MB · macOS 14+ · free &amp; open source</div>
+
+          <div class="stats">
+            <div><b>116</b><span>sites, one daemon</span></div>
+            <div><b>6</b><span>PHP versions, isolated</span></div>
+            <div><b>0</b><span>sudo prompts to serve</span></div>
+          </div>
 
           <div class="shot">
             <div class="bar"><i /><i /><i /><span class="mono">Dply Local</span></div>
@@ -205,7 +215,10 @@ export const Landing: FC<{ shot: string; repo: string }> = ({ shot, repo }) => (
           <span class="kicker">Ready when you are</span>
           <h2>Point it at a folder. That's the setup.</h2>
           <p class="sub" style="margin:0 auto 26px">A native macOS app plus a <code class="mono">dpl</code> CLI. Free and open source.</p>
-          <div class="cta"><a class="btn" href={repo}>Get Dply Local</a></div>
+          <div class="cta">
+            <a class="btn" href={dmg}>↓&nbsp; Download for macOS</a>
+            <a class="btn sec" href={repo}>GitHub</a>
+          </div>
         </div>
       </section>
 

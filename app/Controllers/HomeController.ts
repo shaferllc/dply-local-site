@@ -10,6 +10,8 @@ export class HomeController {
     return this.app.make(View).render(
       Landing({
         shot: "/shots/dashboard.png",
+        dmg: "/DplyLocal.dmg",
+        version: config("app.version", "v0.2.0"),
         repo: config("app.repo", "https://github.com/shaferllc/dply-local"),
       }),
     );
