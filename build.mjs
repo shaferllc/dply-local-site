@@ -16,7 +16,7 @@ try {
   mkdirSync("dist", { recursive: true });
   writeFileSync("dist/index.html", html);
   cpSync("resources/public/shots", "dist/shots", { recursive: true });
-  cpSync("resources/public/logo.png", "dist/logo.png");
+  cpSync("resources/public/logo.svg", "dist/logo.svg");
   writeFileSync("dist/_headers", "/shots/*\n  Cache-Control: public, max-age=31536000, immutable\n");
   console.log("Wrote dist/index.html + dist/shots/");
 } finally {

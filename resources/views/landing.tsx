@@ -138,6 +138,13 @@ const styles = `
   footer .sp{flex:1}
   footer a{color:var(--dim)}footer a:hover{color:var(--ink)}
   .divide{border:0;border-top:1px solid var(--line);margin:0}
+
+  .road{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin-top:38px;border-top:1px solid var(--line)}
+  @media(max-width:760px){.road{grid-template-columns:1fr}}
+  .ri{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .ri .n{font:600 12px/1.6 'JetBrains Mono',monospace;color:var(--coral);flex:none;width:26px;padding-top:2px}
+  .ri h4{margin:0 0 3px;font-size:15.5px;letter-spacing:-.01em}
+  .ri p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.5}
 `;
 
 const Cell: FC<{ ic: string; title: string; span?: string; children: string }> = ({ ic, title, span, children }) => (
@@ -157,22 +164,25 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
       <meta name="description" content="One daemon serves every .test site with trusted HTTPS, per-project PHP and Node, a built-in flame-graph profiler, and a live console of every subsystem. A native macOS app." />
       <meta property="og:title" content="Dply Local — local PHP dev, without the yak-shaving" />
       <meta property="og:description" content="Per-project PHP & Node, one-click SPX profiling, trusted .test HTTPS with no sudo, and a live System console — in a native macOS app." />
-      <link rel="icon" type="image/png" href="/logo.png" />
-      <link rel="apple-touch-icon" href="/logo.png" />
+      <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+      <link rel="apple-touch-icon" href="/logo.svg" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-      <style>{styles}</style>
+      {/* raw: Hono escapes children, turning quotes in font-family into &#39; and
+          breaking every quoted font name — that was the serif fallback. */}
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
     </head>
     <body>
       <nav>
         <div class="wrap">
-          <img class="logo" src="/logo.png" alt="Dply Local" />
+          <img class="logo" src="/logo.svg" alt="Dply Local" />
           <div class="brand">Dply&nbsp;Local</div>
           <div class="sp" />
           <a class="lnk" href="#features">Features</a>
           <a class="lnk" href="#profiler">Profiler</a>
           <a class="lnk" href="#console">Console</a>
+          <a class="lnk" href="#roadmap">Roadmap</a>
           <a class="lnk" href={repo}>GitHub</a>
           <a class="btn" href={dmg}>Download</a>
         </div>
@@ -294,6 +304,26 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
         </div>
       </section>
 
+      <section id="roadmap">
+        <div class="wrap">
+          <span class="kick">What's next</span>
+          <h2>The roadmap</h2>
+          <p class="sub">Where it's headed — the biggest reliability, observability and performance bets.</p>
+          <div class="road">
+            <div class="ri"><span class="n">01</span><div><h4>Signed &amp; notarized releases</h4><p>Opens with no Gatekeeper warning; one-time approval instead of a prompt each setup.</p></div></div>
+            <div class="ri"><span class="n">02</span><div><h4>Self-updating app</h4><p>Updates itself from GitHub Releases — no re-downloading the DMG.</p></div></div>
+            <div class="ri"><span class="n">03</span><div><h4>Bundled PHP runtimes</h4><p>dply ships its own PHP builds — reproducible everywhere, no host-extension surprises.</p></div></div>
+            <div class="ri"><span class="n">04</span><div><h4>Notifications</h4><p>Native push for worker failures, N+1 query bursts, and slow routes.</p></div></div>
+            <div class="ri"><span class="n">05</span><div><h4>Web Tinker &amp; queries</h4><p>A browser REPL into a site, plus a live query inspector — same origin.</p></div></div>
+            <div class="ri"><span class="n">06</span><div><h4>Richer debug capture</h4><p>Queries, jobs, views, mail, cache, events and HTTP, filterable per request.</p></div></div>
+            <div class="ri"><span class="n">07</span><div><h4>Committable team config</h4><p>Check in dpl.toml; a teammate runs one command for your exact environment.</p></div></div>
+            <div class="ri"><span class="n">08</span><div><h4>Per-branch DB snapshots</h4><p>Switch git branch, switch data — no reseed dance.</p></div></div>
+            <div class="ri"><span class="n">09</span><div><h4>Sub-100ms cold starts</h4><p>opcache preload + worker warming to kill first-request latency.</p></div></div>
+            <div class="ri"><span class="n">10</span><div><h4>Push-based tailing</h4><p>Instant logs via a file watcher, zero idle CPU; incremental reconcile at scale.</p></div></div>
+          </div>
+        </div>
+      </section>
+
       <section class="final">
         <div class="wrap">
           <span class="kick">Ready when you are</span>
@@ -309,7 +339,7 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
 
       <footer>
         <div class="wrap">
-          <img class="logo" src="/logo.png" alt="" style="width:22px;height:22px" />
+          <img class="logo" src="/logo.svg" alt="" style="width:22px;height:22px" />
           <span>Dply Local</span>
           <div class="sp" />
           <a href={repo}>GitHub</a><span>·</span>
