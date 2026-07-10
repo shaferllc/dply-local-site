@@ -15,7 +15,7 @@ const styles = `
     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   .mono,code{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
-  .disp{font-family:"Space Grotesk","Inter",sans-serif}
+  
   .wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
 
   /* dotted grid + glow backdrop */
@@ -29,10 +29,9 @@ const styles = `
   nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);
     background:rgba(7,7,9,.6);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;align-items:center;gap:16px;height:62px}
-  .logo{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;
-    font-weight:800;color:#fff;background:linear-gradient(135deg,var(--coral),var(--coral2));
-    box-shadow:0 6px 20px -6px rgba(244,85,46,.7)}
-  .brand{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.02em}
+  img.logo{width:30px;height:30px;border-radius:8px;flex:none;display:block;
+    box-shadow:0 6px 20px -8px rgba(244,85,46,.6)}
+  .brand{font-weight:700;letter-spacing:-.03em;font-size:16px}
   nav .sp{flex:1}
   nav a.lnk{color:var(--dim);font-size:14px;padding:8px 10px}
   nav a.lnk:hover{color:var(--ink)}
@@ -52,7 +51,7 @@ const styles = `
   .blink{width:7px;height:7px;border-radius:50%;background:var(--green);
     box-shadow:0 0 0 0 rgba(67,224,141,.6);animation:pulse 2s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(67,224,141,.5)}70%{box-shadow:0 0 0 7px rgba(67,224,141,0)}100%{box-shadow:0 0 0 0 rgba(67,224,141,0)}}
-  h1{font-family:'Space Grotesk','Inter',sans-serif;font-size:clamp(38px,5.6vw,62px);line-height:1.02;letter-spacing:-.035em;margin:0 0 20px;font-weight:800}
+  h1{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:clamp(38px,5.6vw,64px);line-height:1.0;letter-spacing:-.045em;margin:0 0 20px;font-weight:800}
   h1 .g{background:linear-gradient(115deg,var(--coral),var(--coral2) 60%,var(--amber));
     -webkit-background-clip:text;background-clip:text;color:transparent}
   .lede{font-size:clamp(16px,1.9vw,19px);color:var(--dim);max-width:520px;margin:0 0 28px}
@@ -103,7 +102,7 @@ const styles = `
 
   section{padding:76px 0;position:relative}
   .kick{color:var(--coral);font:600 12px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
-  h2{font-family:'Space Grotesk','Inter',sans-serif;font-size:clamp(27px,3.6vw,40px);letter-spacing:-.025em;margin:12px 0 12px;font-weight:800;line-height:1.05}
+  h2{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;font-size:clamp(27px,3.6vw,40px);letter-spacing:-.035em;margin:12px 0 12px;font-weight:800;line-height:1.04}
   .sub{color:var(--dim);max-width:560px;font-size:16px}
 
   /* bento */
@@ -158,15 +157,17 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
       <meta name="description" content="One daemon serves every .test site with trusted HTTPS, per-project PHP and Node, a built-in flame-graph profiler, and a live console of every subsystem. A native macOS app." />
       <meta property="og:title" content="Dply Local — local PHP dev, without the yak-shaving" />
       <meta property="og:description" content="Per-project PHP & Node, one-click SPX profiling, trusted .test HTTPS with no sudo, and a live System console — in a native macOS app." />
+      <link rel="icon" type="image/png" href="/logo.png" />
+      <link rel="apple-touch-icon" href="/logo.png" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
       <style>{styles}</style>
     </head>
     <body>
       <nav>
         <div class="wrap">
-          <div class="logo">D</div>
+          <img class="logo" src="/logo.png" alt="Dply Local" />
           <div class="brand">Dply&nbsp;Local</div>
           <div class="sp" />
           <a class="lnk" href="#features">Features</a>
@@ -308,7 +309,7 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
 
       <footer>
         <div class="wrap">
-          <div class="logo" style="width:24px;height:24px;font-size:13px">D</div>
+          <img class="logo" src="/logo.png" alt="" style="width:22px;height:22px" />
           <span>Dply Local</span>
           <div class="sp" />
           <a href={repo}>GitHub</a><span>·</span>

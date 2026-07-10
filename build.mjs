@@ -17,6 +17,7 @@ try {
   writeFileSync("dist/index.html", html);
   cpSync("resources/public/shots", "dist/shots", { recursive: true });
   cpSync("resources/public/DplyLocal.dmg", "dist/DplyLocal.dmg");
+  cpSync("resources/public/logo.png", "dist/logo.png");
   writeFileSync("dist/_headers", "/shots/*\n  Cache-Control: public, max-age=31536000, immutable\n");
   console.log("Wrote dist/index.html + dist/shots/");
 } finally {
