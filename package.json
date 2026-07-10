@@ -1,0 +1,24 @@
+{
+  "name": "dply-local-site",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Marketing site for Dply Local, built with Keel.",
+  "scripts": {
+    "keel": "tsx bin/console.ts",
+    "serve": "tsx bin/console.ts serve",
+    "dev": "tsx watch bin/console.ts serve",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@shaferllc/keel": "file:../keel",
+    "commander": "^12.1.0",
+    "hono": "^4.6.14"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
