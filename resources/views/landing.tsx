@@ -145,6 +145,9 @@ const styles = `
   .ri .n{font:600 12px/1.6 'JetBrains Mono',monospace;color:var(--coral);flex:none;width:26px;padding-top:2px}
   .ri h4{margin:0 0 3px;font-size:15.5px;letter-spacing:-.01em}
   .ri p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.5}
+  .ri.done .n{color:var(--green)}
+  .ri.done h4{color:var(--dim)}
+  .ri.done h4::after{content:" — shipped";color:var(--green);font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.04em}
 `;
 
 const Cell: FC<{ ic: string; title: string; span?: string; children: string }> = ({ ic, title, span, children }) => (
@@ -161,9 +164,9 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Dply Local — a whole local dev environment, in one app</title>
-      <meta name="description" content="One daemon serves every .test site with trusted HTTPS, per-project PHP and Node, a built-in flame-graph profiler, and a live console of every subsystem. A native macOS app." />
+      <meta name="description" content="One daemon serves every .test site with trusted HTTPS, per-project PHP and Node, a database per git branch, a built-in flame-graph profiler, and a live console of every subsystem. A native macOS app." />
       <meta property="og:title" content="Dply Local — local PHP dev, without the yak-shaving" />
-      <meta property="og:description" content="Per-project PHP & Node, one-click SPX profiling, trusted .test HTTPS with no sudo, and a live System console — in a native macOS app." />
+      <meta property="og:description" content="Per-project PHP & Node, a database per git branch, one-click SPX profiling, trusted .test HTTPS with no sudo, and a live System console — in a native macOS app." />
       <link rel="icon" type="image/svg+xml" href="/logo.svg" />
       <link rel="apple-touch-icon" href="/logo.svg" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -180,6 +183,7 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
           <div class="brand">Dply&nbsp;Local</div>
           <div class="sp" />
           <a class="lnk" href="#features">Features</a>
+          <a class="lnk" href="#branchdb">Databases</a>
           <a class="lnk" href="#profiler">Profiler</a>
           <a class="lnk" href="#console">Console</a>
           <a class="lnk" href="#roadmap">Roadmap</a>
@@ -191,7 +195,7 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
       <header>
         <div class="wrap hgrid">
           <div>
-            <span class="eyebrow"><span class="blink" /> 116 sites · one daemon · all running</span>
+            <span class="eyebrow"><span class="blink" /> 121 sites · one daemon · all running</span>
             <h1>Local PHP dev,<br /><span class="g">without the yak-shaving.</span></h1>
             <p class="lede">
               Point it at a folder — it's a site, with trusted HTTPS, per-project PHP &amp; Node,
@@ -201,10 +205,11 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
               <a class="btn" href={dmg}>↓&nbsp; Download for macOS</a>
               <a class="btn ghost" href={repo}>View source</a>
             </div>
-            <div class="ver mono">{version} · 3.4 MB · macOS 14+ · free &amp; open source</div>
+            <div class="ver mono">{version} · 3.9 MB · macOS 14+ · free &amp; open source</div>
             <div class="stats">
-              <div><b>116</b><span class="mono">sites, one daemon</span></div>
+              <div><b>121</b><span class="mono">sites, one daemon</span></div>
               <div><b>6</b><span class="mono">PHP versions, isolated</span></div>
+              <div><b>~90ms</b><span class="mono">branch-DB switches</span></div>
               <div><b>0</b><span class="mono">sudo to serve</span></div>
             </div>
           </div>
@@ -256,6 +261,33 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
             <Cell ic="🔥" title="Built-in SPX profiler" span="span2">Flip it on and every PHP-FPM request becomes a flame graph, served same-origin. No cookie, no trigger.</Cell>
             <Cell ic="🔌" title="Ports 80/443, no root" span="span2">launchd binds the privileged ports and hands them over — the daemon never runs as root.</Cell>
             <Cell ic="🐞" title="Xdebug · Mail · Dumps" span="span2">Per-site Xdebug on its own pool, an SMTP sink with per-site mailboxes, and dump()/ray() captured in-app.</Cell>
+            <Cell ic="🌿" title="A database per git branch" span="span3">Attach once and every branch keeps its own Postgres data. Checkouts swap it automatically in ~90ms — migrations never bleed across branches.</Cell>
+            <Cell ic="📦" title="Committable team config" span="span3">Check in dpl.toml and a teammate runs one `dpl up` for your exact site — PHP pin, HTTPS, runtime, Xdebug, preload, branch database, required services.</Cell>
+          </div>
+        </div>
+      </section>
+
+      <section id="branchdb">
+        <div class="wrap split">
+          <div>
+            <span class="kick">Switch branch, switch data</span>
+            <h2>A database for every git branch</h2>
+            <p class="sub">Attach a site's database once and it follows your checkouts. Known branches swap in ~90ms; a new branch clones the state you left. Your .env never changes.</p>
+            <ul>
+              <li>Plain <code class="mono">git checkout</code> — no command, the daemon watches</li>
+              <li>Migrations on a branch stay on that branch</li>
+              <li>Parked copies listed with sizes; drop them when merged</li>
+            </ul>
+          </div>
+          <div class="code">
+            <span class="c"># once</span><br />
+            <span class="k">dpl</span> db attach myapp<br />
+            <span class="g">✓</span> `myapp` now tracks git branch `main`<br /><br />
+            <span class="c"># then just work</span><br />
+            <span class="k">git</span> checkout -b feat/new-schema<br />
+            <span class="g">✓</span> cloned from `main` — migrate away<br />
+            <span class="k">git</span> checkout main<br />
+            <span class="g">✓</span> swapped back in <span class="a">92ms</span> — data intact
           </div>
         </div>
       </section>
@@ -311,15 +343,15 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
           <p class="sub">Where it's headed — the biggest reliability, observability and performance bets.</p>
           <div class="road">
             <div class="ri"><span class="n">01</span><div><h4>Signed &amp; notarized releases</h4><p>Opens with no Gatekeeper warning; one-time approval instead of a prompt each setup.</p></div></div>
-            <div class="ri"><span class="n">02</span><div><h4>Self-updating app</h4><p>Updates itself from GitHub Releases — no re-downloading the DMG.</p></div></div>
+            <div class="ri done"><span class="n">✓</span><div><h4>Self-updating app</h4><p>Sparkle checks GitHub Releases daily and updates in place — lands in the next DMG.</p></div></div>
             <div class="ri"><span class="n">03</span><div><h4>Bundled PHP runtimes</h4><p>dply ships its own PHP builds — reproducible everywhere, no host-extension surprises.</p></div></div>
             <div class="ri"><span class="n">04</span><div><h4>Notifications</h4><p>Native push for worker failures, N+1 query bursts, and slow routes.</p></div></div>
             <div class="ri"><span class="n">05</span><div><h4>Web Tinker &amp; queries</h4><p>A browser REPL into a site, plus a live query inspector — same origin.</p></div></div>
             <div class="ri"><span class="n">06</span><div><h4>Richer debug capture</h4><p>Queries, jobs, views, mail, cache, events and HTTP, filterable per request.</p></div></div>
-            <div class="ri"><span class="n">07</span><div><h4>Committable team config</h4><p>Check in dpl.toml; a teammate runs one command for your exact environment.</p></div></div>
-            <div class="ri"><span class="n">08</span><div><h4>Per-branch DB snapshots</h4><p>Switch git branch, switch data — no reseed dance.</p></div></div>
-            <div class="ri"><span class="n">09</span><div><h4>Sub-100ms cold starts</h4><p>opcache preload + worker warming to kill first-request latency.</p></div></div>
-            <div class="ri"><span class="n">10</span><div><h4>Push-based tailing</h4><p>Instant logs via a file watcher, zero idle CPU; incremental reconcile at scale.</p></div></div>
+            <div class="ri done"><span class="n">✓</span><div><h4>Committable team config</h4><p>dpl.toml is in: check it in, a teammate runs `dpl up` for your exact environment.</p></div></div>
+            <div class="ri done"><span class="n">✓</span><div><h4>Branch-aware databases</h4><p>Beyond snapshots: checkouts swap a per-branch Postgres DB automatically, in ~90ms.</p></div></div>
+            <div class="ri done"><span class="n">✓</span><div><h4>Sub-100ms cold starts</h4><p>opcache preload (dpl preload) + worker warm-up shipped in 0.3.0.</p></div></div>
+            <div class="ri"><span class="n">10</span><div><h4>Push-based tailing</h4><p>Event-driven log tailing shipped; incremental reconcile at scale still to come.</p></div></div>
           </div>
         </div>
       </section>
@@ -333,7 +365,7 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
             <a class="btn" href={dmg}>↓&nbsp; Download for macOS</a>
             <a class="btn ghost" href={repo}>GitHub</a>
           </div>
-          <div class="ver mono" style="margin-bottom:6px">{version} · 3.4 MB · macOS 14+</div>
+          <div class="ver mono" style="margin-bottom:6px">{version} · 3.9 MB · macOS 14+</div>
         </div>
       </section>
 
