@@ -351,7 +351,7 @@ export const Landing: FC<{ shot: string; repo: string; dmg: string; version: str
             <div class="ri done"><span class="n">✓</span><div><h4>Committable team config</h4><p>dpl.toml is in: check it in, a teammate runs `dpl up` for your exact environment.</p></div></div>
             <div class="ri done"><span class="n">✓</span><div><h4>Branch-aware databases</h4><p>Beyond snapshots: checkouts swap a per-branch Postgres DB automatically, in ~90ms.</p></div></div>
             <div class="ri done"><span class="n">✓</span><div><h4>Sub-100ms cold starts</h4><p>opcache preload (dpl preload) + worker warm-up shipped in 0.3.0.</p></div></div>
-            <div class="ri"><span class="n">10</span><div><h4>Push-based tailing</h4><p>Event-driven log tailing shipped; incremental reconcile at scale still to come.</p></div></div>
+            <div class="ri done"><span class="n">✓</span><div><h4>Push-based tailing + incremental reconcile</h4><p>Event-driven tailing and one-site reconciles (1.75s → 0.01s at 150 sites) are in; pooled FastCGI still to come.</p></div></div>
           </div>
         </div>
       </section>
